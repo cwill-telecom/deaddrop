@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CipherDrop</title>
+<style>/*CSS*/</style>
+</head>
+<body>
+
+<main>
+  <header>
+    <span class="lock-icon">🔐</span>
+    <h1>DeadDrop</h1>
+    <p>End-to-end encrypted file transfer on your local network</p>
+  </header>
+
+  <!-- upload card -->
+  <section class="card">
+    <div class="card-header"> Upload</div>
+    <div class="upload-zone" id="uploadZone">
+      <span class="icon" id="zoneIcon">📁</span>
+      <span id="zoneLabel"><span class="hint">Click or drag a file here</span></span>
+      <span class="hint">Files are encrypted before they leave your browser</span>
+    </div>
+    <input type="file" id="fileInput">
+
+    <div class="form-row">
+      <input type="password" id="keyInput"
+             placeholder="Encryption passphrase" autocomplete="off">
+      <button class="btn btn-primary" id="uploadBtn">⬆ Upload</button>
+    </div>
+    <div class="status-bar">
+      <span id="statusText">idle</span>
+      <span id="fileCount">no files</span>
+    </div>
+  </section>
+
+  <!-- file list -->
+  <section class="card">
+    <div class="card-header"> Available Files</div>
+    <div class="file-grid" id="fileList">
+    {% if files %}
+      {% for name, mtime, size in files %}
+      <div class="file-row">
+        <span class="file-icon">🔒</span>
+        <div class="file-info">
+          <div class="file-name">{{ name }}</div>
+          <div class="file-meta">{{ size }} bytes</div>
+        </div>
+        <button class="btn btn-ghost download-btn" data-file="{{ name }}">⬇ Download</button>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state">
+        <div class="icon"></div>
+        <p>No files yet. Upload one above.</p>
+      </div>
+    {% endif %}
+    </div>
+  </section>
+
+  <footer>
+    Files are encrypted with AES-256-GCM in your browser. The server never sees plaintext.
+  </footer>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>/*JS*/</script>
+</body>
+</html>
